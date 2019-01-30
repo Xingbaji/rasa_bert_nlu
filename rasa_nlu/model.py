@@ -23,10 +23,12 @@ from rasa_nlu.persistor import Persistor
 from rasa_nlu.training_data import TrainingData, Message
 from rasa_nlu.utils import create_dir, write_json_to_file
 
+import sys
+sys.path.append("./rasa_nlu/bert_source_code")
+
 logger = logging.getLogger(__name__)
 
 MINIMUM_COMPATIBLE_VERSION = "0.13.0a2"
-
 
 class InvalidProjectError(Exception):
     """Raised when a model failed to load.

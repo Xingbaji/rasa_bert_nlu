@@ -15,6 +15,20 @@ from typing import Optional
 from typing import Text
 from typing import Type
 
+#mycomponent
+from rasa_nlu.tokenizers.bert_tokenizer import BertTokenizer
+from rasa_nlu.featurizers.bert_featurizer import BertFeaturizer
+from rasa_nlu.classifiers.bert_intent_classifier import BertKerasIntentClassfier
+from rasa_nlu.extractors.bert_entity_extractor import BertEntityExtractor
+from rasa_nlu.mycomponent.bert_sentiment_analyzer import BertSentimentAnalyzer
+from rasa_nlu.mycomponent.bert_lm_spell_checker import BertLmSpellChecker
+from rasa_nlu.mycomponent.bert_generator import BertGenerator
+from rasa_nlu.mycomponent.bert_auto_keras import BertAutoKerasClassfier
+
+from rasa_nlu.mycomponent.spellchecker import SpellChecker
+from rasa_nlu.mycomponent.sentiment_analyzer import SentimentAnalyzer
+
+
 from rasa_nlu.classifiers.keyword_intent_classifier import \
     KeywordIntentClassifier
 from rasa_nlu.classifiers.mitie_intent_classifier import MitieIntentClassifier
@@ -42,6 +56,9 @@ from rasa_nlu.tokenizers.whitespace_tokenizer import WhitespaceTokenizer
 from rasa_nlu.utils.mitie_utils import MitieNLP
 from rasa_nlu.utils.spacy_utils import SpacyNLP
 
+import sys
+sys.path.append("./rasa_nlu/bert_source_code")
+
 if typing.TYPE_CHECKING:
     from rasa_nlu.components import Component
     from rasa_nlu.config import RasaNLUModelConfig, RasaNLUModelConfig
@@ -57,7 +74,17 @@ component_classes = [
     CountVectorsFeaturizer,
     MitieTokenizer, SpacyTokenizer, WhitespaceTokenizer, JiebaTokenizer,
     SklearnIntentClassifier, MitieIntentClassifier, KeywordIntentClassifier,
-    EmbeddingIntentClassifier
+    EmbeddingIntentClassifier,
+    SpellChecker,
+    SentimentAnalyzer,
+    BertTokenizer,
+    BertFeaturizer,
+    BertKerasIntentClassfier,
+    BertSentimentAnalyzer,
+    BertLmSpellChecker,
+    BertEntityExtractor,
+    BertGenerator,
+    BertAutoKerasClassfier
 ]
 
 # Mapping from a components name to its class to allow name based lookup.

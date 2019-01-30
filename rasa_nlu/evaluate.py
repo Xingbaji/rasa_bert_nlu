@@ -292,7 +292,12 @@ def evaluate_intents(intent_results,
     errors = collect_nlu_errors(intent_results)
 
     if errors and errors_filename:
-        save_nlu_errors(errors, errors_filename)
+        try:
+            save_nlu_errors(errors, errors_filename)
+        except:
+            print(errors)
+            print("can't save")
+
 
     if confmat_filename:
         from sklearn.metrics import confusion_matrix
@@ -543,7 +548,6 @@ def get_entity_targets(test_data):
 def extract_intent(result):  # pragma: no cover
     """Extracts the intent from a parsing result."""
     return result.get('intent', {}).get('name')
-
 
 def extract_entities(result):  # pragma: no cover
     """Extracts entities from a parsing result."""

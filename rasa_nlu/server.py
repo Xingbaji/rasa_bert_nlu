@@ -27,6 +27,12 @@ from rasa_nlu.version import __version__
 logger = logging.getLogger(__name__)
 
 
+def obj_confidence_str(obj):
+    # 如果confidence是float，server返回会报错
+    obj_new = obj.copy()
+    obj_new['intent']['confidence'] = str(obj['intent']['confidence'])
+    return obj_new
+
 def create_argument_parser():
     parser = argparse.ArgumentParser(description='parse incoming text')
 
@@ -231,6 +237,8 @@ class RasaNLU(object):
         if 'query' in request_params:
             request_params['q'] = request_params.pop('query')
 
+        print("request_params")
+        print(request_params)
         if 'q' not in request_params:
             request.setResponseCode(404)
             dumped = json_to_string(
@@ -238,11 +246,24 @@ class RasaNLU(object):
             returnValue(dumped)
         else:
             data = self.data_router.extract(request_params)
+            request.setResponseCode(200)
+            response = yield (self.data_router.parse(data) if self._testing
+                              else threads.deferToThread(
+                self.data_router.parse, data))
+            # print("response:!!!!!!!!!!")
+            # print(type(response))
+            # print(response)
+            # returnValue(json_to_string(response))
+
             try:
                 request.setResponseCode(200)
                 response = yield (self.data_router.parse(data) if self._testing
                                   else threads.deferToThread(
                         self.data_router.parse, data))
+                print("response:!!!!!!!!!!")
+                print(type(response))
+                print(response)
+                response = obj_confidence_str(response)
                 returnValue(json_to_string(response))
             except InvalidProjectError as e:
                 request.setResponseCode(404)

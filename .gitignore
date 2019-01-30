@@ -33,7 +33,7 @@ tmp_training_data.json
 projects/
 test_models/model_*
 test_projects/test_project_*
-bert_pretrain_model/*
+bert_pretrain_model_orin/*
 rasa_nlu/tmbo_test.py
 .mypy_cache/
 *.tar.gz
